@@ -1,0 +1,148 @@
+#!/usr/in/python
+# -*- coding: utf-8 -*-
+
+import sys
+
+direction_data = {}
+
+hill = {}
+mountain = {}
+valley = {}
+beach = {}
+river = {}
+too_far = {}
+
+n = "n"
+s = "s"
+e = "e"
+w = "w"
+q = "Q"
+
+N = "n"
+S = "s"
+E = "e"
+W = "w"
+Q = "Q"
+
+options = ("n", "s", "e", "w", "q")
+
+hill = {
+    n: 'mountain',
+    s: 'valley',
+    e: 'beach',
+    w: 'river',
+    'info':
+    """
+    High On A Hill
+
+You are free as a bird. To the North you see a mountain range,
+to the South a valley, to the East is beach, and to the West
+you see a wide river.
+    """,
+    }
+river = {
+    e: 'hill',
+    n: 'river',
+    s: 'river',
+    w: 'too_far',
+    'info':
+    """
+    A Wide River
+
+You find the bank of a wide, swift river. You cannot go
+farther to the West. Turn back to the East, or follow
+the bank to the North or South.
+    """,
+    }
+mountain = {
+    n: 'too_far',
+    s: 'hill',
+    e: 'mountain',
+    w: 'mountain',
+    'info':
+    """
+    In The Mountains
+
+You climb into rugged mountains. If you go farther North
+you will surely die. It is too cold for you there. You
+can travel in the mountains choosing either East or West, 
+or go to the South, returning to the hill country.
+    """,
+    }
+valley = {
+    n: 'hill',
+    s: 'too_far',
+    e: 'valley',
+    w: 'valley',
+    'info':
+    """
+    A Shady Valley
+
+You enter a cool, forested valley. To the North is the hill
+country, and to either East or West are the pine trees and
+singing birds of the valley. Do not dare to go any farther
+South, it is not safe for travellers like yourself.
+    """,
+    }
+beach = {
+    n: 'beach',
+    s: 'beach',
+    e: 'too_far',
+    w: 'hill',
+    'info':
+    """
+    Walk Along The Beach
+
+You arrive at a long, lonesome beach. Your feet like the
+crunch of the sand as you walk. To the East is a glittering
+blue ocean. The water could be filled with sharks, you dare
+not swim. You can return to the hill country if you go West, or
+you can follow the beach to the North or South.
+    """,
+    }
+too_far = {
+    n: 'too_far',
+    s: 'too_far',
+    e: 'too_far',
+    w: 'too_far',
+    'info':
+    """
+    Too Far
+
+Sadly, you did not heed the warnings. You cannot turn back
+now. You will have to choose: 'Q' to restart the game.
+    """,
+    }
+
+def game_loop(direction_data):
+
+    x = direction_data.get('info')
+    print(x)
+    
+    new_input = input("choose direction: n, s, e, w, or q: ").lower()
+    if new_input not in options:
+        print(
+        """\n    Not An Option    """)
+        game_loop(direction_data)
+    elif new_input == "q":
+        print(
+        """
+    Ok, bye.
+        """)
+        sys.exit()
+
+    else:    
+
+        new_location = (direction_data[new_input])
+        new_data = eval(new_location)
+        y = new_data.get('info')
+        direction_data = new_data        
+        game_loop(direction_data)
+        
+def start():
+
+    start_location = hill
+    direction_data = start_location
+    game_loop(direction_data)
+
+start()
