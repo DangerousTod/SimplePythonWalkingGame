@@ -1,0 +1,382 @@
+#!/usr/in/python
+# -*- coding: utf-8 -*-
+
+import sys
+import time
+
+direction_data = {}
+
+hill = {}
+mountain = {}
+valley = {}
+beach = {}
+river = {}
+
+river_north = {}
+river1_north = {}
+river2_north = {}
+
+too_far = {}
+
+players = ['you']
+
+# [0] is Attack, [1] is Defense, [2] is Description
+you = [3, 4, "Hansome Young Lad"]
+
+
+hill_players = ['Cleo ', 'Artie ', 'Wilk ']
+hill_enemies = ['Nasty ', 'Ugly ']
+# [0] is Attack, [1] is Defense, [2] is Description
+nasty = [2, 3, "What A Nasty Looking Dude"]
+
+river_players = []
+river_enemies = []
+
+mountain_players = []
+mountain_enemies = []
+
+valley_players = []
+valley_enemies = []
+
+beach_players = []
+beach_enemies = []
+
+river_north_players = []
+river_north_enemies = []
+
+river_north1_players = []
+river_north1_enemies = []
+
+river_north2_players = []
+river_north2_enemies = []
+
+too_far_players = []
+too_far_enemies = []
+
+n = "n"
+s = "s"
+e = "e"
+w = "w"
+look = "look "
+#look = (sys.argv[0], sys.argv[1])
+q = "Q"
+home = "home"
+self = "self"
+
+N = "n"
+S = "s"
+E = "e"
+W = "w"
+LOOK = "look "
+#LOOK = (sys.argv[0], sys.argv[1])
+Q = "Q"
+HOME = "home"
+SELF = "self"
+
+options = ("n", "s", "e", "w", "look ", "q")
+
+hill = {
+    n: 'mountain',
+    s: 'valley',
+    e: 'beach',
+    w: 'river',
+    home: 'hill',
+    'info':
+    """
+    High On A Hill
+
+You are free as a bird. To the North you see a mountain range,
+to the South a valley, to the East is beach, and to the West
+you see a wide river.
+    """,
+    "players": (hill_players := (
+    "hill_players ", hill_players)
+    ),
+    
+    "enemies": (hill_enemies := (
+    "hill_enemies ", hill_enemies)
+    ),
+    }
+river = {
+    e: 'hill',
+    n: 'river_north',
+    s: 'river',
+    w: 'too_far',
+    home: 'river',
+    'info':
+    """
+    A Wide River
+
+You find the bank of a wide, swift river. You cannot go
+farther to the West. Turn back to the East, or follow
+the bank to the North or South.
+    """,
+    "players": (river_players := (
+    "river_players ", river_players)
+    ),
+    
+    "enemies": (river_enemies := (
+    "river_enemies ", river_enemies)
+    ),
+    }
+mountain = {
+    n: 'too_far',
+    s: 'hill',
+    e: 'mountain',
+    w: 'mountain',
+    home: 'mountain',
+    'info':
+    """
+    In The Mountains
+
+You climb into rugged mountains. If you go farther North
+you will surely die. It is too cold for you there. You
+can travel in the mountains choosing either East or West, 
+or go to the South, returning to the hill country.
+    """,
+    
+    "players": (mountain_players := (
+    "mountain_players ", mountain_players)
+    ),
+    
+    "enemies": (mountain_enemies := (
+    "mountain_enemies ", mountain_enemies)
+    ),
+    
+    }
+valley = {
+    n: 'hill',
+    s: 'too_far',
+    e: 'valley',
+    w: 'valley',
+    home: 'valley',
+    'info':
+    """
+    A Shady Valley
+
+You enter a cool, forested valley. To the North is the hill
+country, and to either East or West are the pine trees and
+singing birds of the valley. Do not dare to go any farther
+South, it is not safe for travellers like yourself.
+    """,
+    "players": (valley_players := (
+    "valley_players ", valley_players)
+    ),
+    
+    "enemies": (valley_enemies := (
+    "valley_enemies ", valley_enemies)
+    ),
+    }
+beach = {
+    n: 'beach',
+    s: 'beach',
+    e: 'too_far',
+    w: 'hill',
+    home: 'beach',
+    'info':
+    """
+    Walk Along The Beach
+
+You arrive at a long, lonesome beach. Your feet like the
+crunch of the sand as you walk. To the East is a glittering
+blue ocean. The water could be filled with sharks, you dare
+not swim. You can return to the hill country if you go West, or
+you can follow the beach to the North or South.
+    """,
+    "players": (beach_players := (
+    "beach_players ", beach_players)
+    ),
+    
+    "enemies": (beach_enemies := (
+    "beach_enemies ", beach_enemies)
+    ),
+    }
+
+#---------------RIVER NORTH SECTION-------------------
+river_north = {
+    e: 'too_far',
+    n: 'river_north1',
+    s: 'river',
+    w: 'too_far',
+    home: 'river_north',
+    'info':
+    """
+    Walking Along The Bank Of A Wide River
+
+You find the bank of a wide, swift river. You cannot go
+farther to the West. It is too late to turn back. You must follow
+the bank to the North or South.
+    """,
+    "players": (river_north_players := (
+    "river_north_players ", river_north_players)
+    ),
+    
+    "enemies": (river_north_enemies := (
+    "river_north_enemies ", river_north_enemies)
+    ),
+    }
+
+river_north1 = {
+    e: 'too_far',
+    n: 'river_north2',
+    s: 'river_north',
+    w: 'too_far',
+    home: 'river_north1',
+    'info':
+    """
+    Follow The River
+
+You find the bank of a wide, swift river. You cannot go
+farther to the West. You must follow the bank of the river, 
+going either North or South.
+    """,
+    "players": (river_north1_players := (
+    "river_north1_players ", river_north1_players)
+    ),
+    
+    "enemies": (river_north1_enemies := (
+    "river_north1_enemies ", river_north1_enemies)
+    ),
+    }
+
+river_north2 = {
+    e: 'too_far',
+    n: 'too_far',
+    s: 'river_north1',
+    w: 'too_far',
+    home: 'river_north2',
+    'info':
+    """
+    Near The Village
+
+You find the bank of a wide, swift river. You cannot go
+farther to the West and the river becomes a waterfall; 
+you cannot go North. You may follow the bank to the South.
+But, to the East, you might see a town in the distance.
+    """,
+    "players": (river_north2_players := (
+    "river_north2_players ", river_north2_players)
+    ),
+    
+    "enemies": (river_north2_enemies := (
+    "river_north2_enemies ", river_north2_enemies)
+    ),
+    }
+#--------------END RIVER NORTH SECTION-----------------
+
+#--------------START VILLAGE SECTION-------------------
+
+#---------------END VILLAGE SECTION--------------------
+
+#-------------------NO CRASH SECTION-------------------    
+too_far = {
+    n: 'too_far',
+    s: 'too_far',
+    e: 'too_far',
+    w: 'too_far',
+    home: 'too_far',
+    'info':
+    """
+    Too Far
+
+Sadly, you did not heed the warnings. You cannot turn back
+now. You will have to choose: 'Q' to restart the game.
+    """,
+    "players": (too_far_players := (
+    "too_far_players ", too_far_players)
+    ),
+    
+    "enemies": (too_far_enemies := (
+    "too_far_enemies ", too_far_enemies)
+    ),
+    }
+    
+
+def game_loop(direction_data):
+
+    x = direction_data.get('info')
+    print(x)
+    a = direction_data.get('home')
+    b = str(a)
+    
+    location_home_players = "_players "
+    location_home_enemies = "_enemies "
+
+       
+    c = (b + "" + location_home_players)
+    g = (b + "" + location_home_enemies)
+    e = direction_data.get('players')
+    f = direction_data.get('enemies')
+    
+#*----------------------PLAYER-SECTION----------------------*
+
+    new_list = list(e)
+    to_remove = str(c)
+    new_list.remove(to_remove)
+
+    new_list[0].append("You")
+    ready_p_list = new_list.pop(0)
+    format_list = " ".join(ready_p_list)
+    print("Players: ", format_list)
+
+#*-----------------------ENEMY-SECTION----------------------*
+
+    e_list = list(f)
+    e_to_remove = str(g)
+    e_list.remove(e_to_remove)
+    
+#    e_list[0].append("Stinky")
+    
+    ready_e_list = e_list.pop(0)
+    format_e_list = " ".join(ready_e_list)
+#    ready_e_list.remove("Stinky")
+    print("Enemies: ", format_e_list)
+    
+    new_input = input(
+    "\nchoose direction: n, s, e, w, look, or q: "
+    ).lower()
+
+    if "look " in new_input:
+        if len(new_input) > 5:
+            description = new_input[5:]
+           
+            e_description = eval(description)
+            print_me = e_description[2]
+            print("\n")
+            print(print_me)
+            time.sleep(2)
+            game_loop(direction_data)
+            
+    elif new_input not in options:
+        print(
+        """\n    Not An Option    """)
+        game_loop(direction_data)
+
+    elif new_input == "q":
+        print(
+        """
+    Ok, bye.
+        """)
+        sys.exit()
+#*-----------------------MOVE-SECTION----------------------*
+
+    else:
+
+        ready_p_list.remove("You")
+        
+        new_location = (direction_data[new_input])
+        new_data = eval(new_location)
+        y = new_data.get('info')
+        direction_data = new_data        
+        game_loop(direction_data)
+        
+def start():
+
+    start_location = hill
+    direction_data = start_location
+    print(players)
+    remove = players.pop(0)
+    print(players)
+    game_loop(direction_data)
+
+start()
