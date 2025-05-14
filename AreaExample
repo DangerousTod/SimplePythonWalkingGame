@@ -1,0 +1,69 @@
+river_north = {
+    e: 'too_far',
+    n: 'river_north1',
+    s: 'river',
+    w: 'too_far',
+    home: 'river_north',
+    'info':
+    """
+    Walking Along The Bank Of A Wide River
+
+You find the bank of a wide, swift river. You cannot go
+farther to the West. It is too late to turn back. You must follow
+the bank to the North or South.
+    """,
+    "players": (river_north_players := (
+    "river_north_players ", river_north_players)
+    ),
+    
+    "enemies": (river_north_enemies := (
+    "river_north_enemies ", river_north_enemies)
+    ),
+    }
+
+river_north1 = {
+    e: 'too_far',
+    n: 'river_north2',
+    s: 'river_north',
+    w: 'too_far',
+    home: 'river_north1',
+    'info':
+    """
+    Follow The River
+
+You find the bank of a wide, swift river. You cannot go
+farther to the West. You must follow the bank of the river, 
+going either North or South.
+    """,
+    "players": (river_north1_players := (
+    "river_north1_players ", river_north1_players)
+    ),
+    
+    "enemies": (river_north1_enemies := (
+    "river_north1_enemies ", river_north1_enemies)
+    ),
+    }
+
+river_north2 = {
+    e: 'too_far',
+    n: 'too_far',
+    s: 'river_north1',
+    w: 'too_far',
+    home: 'river_north2',
+    'info':
+    """
+    Near The Village
+
+You find the bank of a wide, swift river. You cannot go
+farther to the West and the river becomes a waterfall; 
+you cannot go North. You may follow the bank to the South.
+But, to the East, you might see a town in the distance.
+    """,
+    "players": (river_north2_players := (
+    "river_north2_players ", river_north2_players)
+    ),
+    
+    "enemies": (river_north2_enemies := (
+    "river_north2_enemies ", river_north2_enemies)
+    ),
+    }
