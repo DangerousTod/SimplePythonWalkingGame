@@ -1,0 +1,213 @@
+#!/usr/in/python
+# -*- coding: utf-8 -*-
+
+import sys
+import os
+import time
+
+direction_data = {}
+
+sub_basement = {}
+basement = {}
+machinery = {}
+posting = {}
+observation_room = {}
+exit = {}
+keepers_quarters = {}
+lamp = {}
+home = {}
+
+u = "up"
+up = "up"
+Up = "up"
+UP = "up"
+d = "down"
+down = "down"
+Down = "down"
+DOWN = "down"
+machinery = "machinery"
+posting = "posting"
+home = "home"
+
+q = "quit"
+Q = "quit"
+quit = "quit"
+Quit = "quit"
+QUIT = "quit"
+
+options = ("up","down","machinery","posting")
+quit = ("quit","Quit","QUIT","q","Q")
+
+#sub_basement = 'sub_basement'
+#basement = 'basement'
+#observation_room = 'observation_room'
+#exit = 'exit'
+#keepers_quarters = 'keepers_quarters'
+#lamp = 'lamp'
+
+
+
+sub_basement = {
+    up : 'basement',
+    down : 'sub_basement',
+    posting : 'posting',
+    home : 'sub_basement',
+    'info':
+    """
+    Sub Basement Of The Lighthouse
+
+This is the storage space for machinery and fuel. An important
+looking posting nearly covers an entire wall.
+
+Directions:
+up: Basement
+    """,
+    
+    }
+
+posting = {
+    up : 'basement',
+    down : 'sub_basement',
+    home : 'posting',
+    'info' :
+    """
+    The Writing On The Wall
+    
+Light match in burn tube BEFORE pumping fuel.
+    """,
+    }
+
+basement = {
+    up : 'observation_room',
+    down : 'sub_basement',
+    machinery : 'machinery',
+    home : 'basement',
+    'info':
+    """
+    Basement Of The Lighthouse
+
+A storage space for the necessities of a full-time light
+house keeper. In the corner is a pile of replacement 
+parts for the machinery that should keep the Lighthouse
+lit.
+
+Directions:
+Up: Observation Room or Down: Sub Basement
+    """,
+    }
+
+machinery = {
+    up : 'basement',
+    down : 'sub_basement',
+    home : 'machinery',
+    'info' :
+    """
+    Junk On The Floor
+
+Replacement parts and broken bits from the inner-
+workings of the Light House. Most of the items have
+a small tag tied with a string. On one of the nearly-
+legible tags you notice a strand of numbers similar
+to those printed on a panel in the Observation Room.
+    """
+    }
+
+observation_room = {
+#    exit : 'mountain4u',
+    up : 'keepers_quarters',
+    down : 'basement',
+    home : 'observation_room',
+    'info':
+    """
+    Observation Room Of The Lighthouse
+    
+A window of thick glass gives a clear view of the sea
+from the entry to the Lighthouse.
+
+Directions:
+Exit, Up: Keepers Quarters, or Down: Basement
+    """,
+    }
+
+keepers_quarters = {
+    up : 'lamp',
+    down : 'observation_room',
+    home : 'keepers_quarters',
+    'info':
+    """
+    Keepers Quarters Of The Lighthouse
+
+Small bunk and personal effects of a full-time lighthouse
+keepers.
+
+Directions:
+Up: Lamp or Down: Observation Room
+    """,
+    }
+
+lamp = {
+    up : 'lamp',
+    down : 'keepers_quarters',
+    home : 'lamp',
+    'info':
+    """
+    Lamp Room Of The Lighthouse
+
+Top of the Lighthouse where the lamp beacon shines.
+
+Directions:
+Down: Keepers Quarters
+    """,
+    }
+    
+def game_loop(direction_data):
+
+    x = direction_data.get('info')
+    print(x)
+    
+    new_input = input("choose direction: up, down, or q: ").lower()
+    
+    if new_input in quit:
+        print(
+        """
+    Ok, bye.
+        """)
+        sys.exit()
+    elif new_input in options:
+        os.system("clear")
+        try:
+            new_location = (direction_data[new_input])
+        
+        
+        
+#        try:
+#    value = my_dict["orange"]
+#    print(value)
+        except KeyError:
+            print("""
+            \n    Option Not Found.\n
+            """)
+            time.sleep(1)
+            os.system("clear")
+            game_loop(direction_data)
+        
+        
+        
+        new_data = eval(new_location)
+        y = new_data.get('info')
+        direction_data = new_data        
+        game_loop(direction_data)
+
+    else:
+        os.system('clear')
+        print(
+        """\n    Not An Option    """)
+        game_loop(direction_data)
+        
+def start():
+    os.system('clear')
+    start_location = observation_room
+    direction_data = start_location
+    game_loop(direction_data)
+
+start()
