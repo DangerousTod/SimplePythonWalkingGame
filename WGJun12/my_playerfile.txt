@@ -1,0 +1,2 @@
+('howlard', [7, 7, 'lean and mean', 125, 'You', 'player', [], {}, 'howlard'], ['hat', 'shirt', 'sandals', 'rock', 'key', ' '])
+('wolfbert', [7, 7, 'furry in a bad way', 125, 'You', 'player', [], {}, 'wolfbert'], ['hat', 'shirt', 'slippers', 'rock', 'wrench', 'potion'])
