@@ -1,0 +1,4 @@
+('wolfbert', [6, 6, 'lookinng at you', 99, 'You', 'player', [], {}, 'wolfbert'], ['scarf', 'shirt', 'shoes', 'sword', 'key', 'potion'], [False, False, False, False, False, False, False, False])
+('fomunda', [7, 7, 'hairy', 99, 'You', 'player', [], {}, 'fomunda'], ['scarf', 'shirt', 'boots', 'rock', 'key', ' '], [False, False, False, False, False, False, False, False])
+('clark', [3, 3, 'chiseled jaw, need i say more?', 99, 'You', 'player', [], {}, 'clark'], ['hat', 'shirt', 'slippers', 'sword', 'key', ' '], [False, False, False, False, False, False, False, False])
+('howlard', [7, 7, 'fuzzy', 99, 'You', 'player', [], {}, 'howlard'], ['hat', 'coat', 'boots', 'sword', 'key', 'potion'], [False, False, False, False, False, False, False, False])
